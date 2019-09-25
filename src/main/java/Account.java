@@ -12,4 +12,12 @@ public class Account {
         return this.amount;
     }
 
+    public void makeDeposit(double amount) {
+        this.amount += amount;
+    }
+
+    public void makeWithdraw(double amount) {
+        this.amount -= amount;
+    }
+
 }
