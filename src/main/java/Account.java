@@ -20,4 +20,9 @@ public class Account {
         this.amount -= amount;
     }
 
+    public void makeTransfer(double amount, Account creditedAccount) {
+        this.amount -= amount;
+        creditedAccount.amount += amount;
+    }
+
 }
