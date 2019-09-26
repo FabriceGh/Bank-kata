@@ -1,5 +1,5 @@
 package domain;
 
-public enum OperationType {
+public enum StatementType {
     Deposit, Withdrawal, TransferDebit, TransferCredit
 }

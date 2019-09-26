@@ -1,30 +1,29 @@
 package domain;
 
-import java.time.LocalDate;
 import java.util.Vector;
 
 public class Account {
 
     private double balance;
-    private Vector<Operation> operations;
+    private Vector<Statement> statements;
 
     public Account() {
         this.balance = 0.0;
-        this.operations = new Vector<Operation>();
+        this.statements = new Vector<Statement>();
     }
 
     public double getBalance() {
         return this.balance;
     }
 
-    public Vector<Operation> getOperations() {
-        return operations;
+    public Vector<Statement> getStatements() {
+        return statements;
     }
 
     public void makeDeposit(double amount) {
 
-        this.operations.add(    new Operation(
-                                    OperationType.Deposit,
+        this.statements.add(    new StatementCredit(
+                                    StatementType.Deposit,
                                     this.balance,
                                     amount)
                            );
@@ -32,8 +31,8 @@ public class Account {
     }
 
     public void makeWithdraw(double amount) {
-        this.operations.add(    new Operation(
-                                    OperationType.Withdrawal,
+        this.statements.add(    new StatementDebit(
+                                    StatementType.Withdrawal,
                                     this.balance,
                                     amount)
         );
@@ -41,13 +40,13 @@ public class Account {
     }
 
     public void makeTransfer(double amount, Account creditedAccount) {
-        this.operations.add(    new Operation(
-                                    OperationType.TransferDebit,
+        this.statements.add(    new StatementDebit(
+                                    StatementType.TransferDebit,
                                     this.balance,
                                     amount)
         );
-        creditedAccount.operations.add(    new Operation(
-                                            OperationType.TransferCredit,
+        creditedAccount.statements.add(    new StatementCredit(
+                                            StatementType.TransferCredit,
                                             creditedAccount.getBalance(),
                                             amount)
         );

@@ -1,15 +1,16 @@
 package domain;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
-public class Operation {
+public abstract class Statement {
 
     private final LocalDate date;
-    private final OperationType type;
+    private final StatementType type;
     private final double balance;
     private final double amount;
 
-    public Operation(OperationType type, double balance, double amount){
+    public Statement(StatementType type, double balance, double amount){
         this.date = LocalDate.now();
         this.type = type;
         this.balance = balance;
@@ -20,7 +21,7 @@ public class Operation {
         return date;
     }
 
-    public OperationType getType() {
+    public StatementType getType() {
         return type;
     }
 
@@ -32,4 +33,5 @@ public class Operation {
         return amount;
     }
 
+    public abstract String getStringRepresentation();
 }

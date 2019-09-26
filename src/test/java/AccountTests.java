@@ -1,5 +1,5 @@
 import domain.Account;
-import domain.OperationType;
+import domain.StatementType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,7 +19,7 @@ public class AccountTests {
     @Test
     void should_return_empty_operation_list() {
 
-        assertEquals(0, account.getOperations().size());
+        assertEquals(0, account.getStatements().size());
 
     }
 
@@ -30,10 +30,10 @@ public class AccountTests {
         account.makeDeposit(1000.00);
         assertEquals(oldAmount + 1000.00, account.getBalance());
 
-        assertEquals(OperationType.Deposit, account.getOperations().lastElement().getType());
-        assertEquals(oldAmount, account.getOperations().lastElement().getBalance());
-        assertEquals(1000.00, account.getOperations().lastElement().getAmount());
-        assertNotNull(account.getOperations().lastElement().getDate());
+        assertEquals(StatementType.Deposit, account.getStatements().lastElement().getType());
+        assertEquals(oldAmount, account.getStatements().lastElement().getBalance());
+        assertEquals(1000.00, account.getStatements().lastElement().getAmount());
+        assertNotNull(account.getStatements().lastElement().getDate());
     }
 
 
@@ -44,10 +44,10 @@ public class AccountTests {
         account.makeWithdraw(1000.00);
         assertEquals(oldAmount - 1000.00, account.getBalance());
 
-        assertEquals(OperationType.Withdrawal, account.getOperations().lastElement().getType());
-        assertEquals(oldAmount, account.getOperations().lastElement().getBalance());
-        assertEquals(1000.00, account.getOperations().lastElement().getAmount());
-        assertNotNull(account.getOperations().lastElement().getDate());
+        assertEquals(StatementType.Withdrawal, account.getStatements().lastElement().getType());
+        assertEquals(oldAmount, account.getStatements().lastElement().getBalance());
+        assertEquals(1000.00, account.getStatements().lastElement().getAmount());
+        assertNotNull(account.getStatements().lastElement().getDate());
 
     }
 
@@ -60,14 +60,14 @@ public class AccountTests {
         assertEquals(oldAmount - 500.00, account.getBalance());
 
         assertEquals(oldReceiverAmount + 500.00, receiverAccount.getBalance());
-        assertEquals(OperationType.TransferDebit, account.getOperations().lastElement().getType());
-        assertEquals(oldAmount, account.getOperations().lastElement().getBalance());
-        assertEquals(500.00, account.getOperations().lastElement().getAmount());
-        assertNotNull(account.getOperations().lastElement().getDate());
+        assertEquals(StatementType.TransferDebit, account.getStatements().lastElement().getType());
+        assertEquals(oldAmount, account.getStatements().lastElement().getBalance());
+        assertEquals(500.00, account.getStatements().lastElement().getAmount());
+        assertNotNull(account.getStatements().lastElement().getDate());
 
-        assertEquals(OperationType.TransferCredit, receiverAccount.getOperations().lastElement().getType());
-        assertEquals(oldReceiverAmount, receiverAccount.getOperations().lastElement().getBalance());
-        assertEquals(500.00, receiverAccount.getOperations().lastElement().getAmount());
-        assertNotNull(receiverAccount.getOperations().lastElement().getDate());
+        assertEquals(StatementType.TransferCredit, receiverAccount.getStatements().lastElement().getType());
+        assertEquals(oldReceiverAmount, receiverAccount.getStatements().lastElement().getBalance());
+        assertEquals(500.00, receiverAccount.getStatements().lastElement().getAmount());
+        assertNotNull(receiverAccount.getStatements().lastElement().getDate());
     }
 }
