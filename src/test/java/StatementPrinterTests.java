@@ -3,15 +3,26 @@ import domain.StatementCredit;
 import domain.StatementDebit;
 import domain.StatementType;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import service.DateNow;
+import service.DateService;
 import service.StatementPrinter;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class StatementPrinterTests {
+
+    private final DateService dateService = new DateNow();
+
+    @Mock
+    DateService mockedDateService = mock(DateNow.class);
+
 
     @Test
     void should_return_5_columns(){
@@ -48,7 +59,7 @@ public class StatementPrinterTests {
     @Test
     void should_pad_data_to_30_char(){
         String dataToPad = "test";
-        String paddedData = StatementPrinter.columnSpacePadder(dataToPad, 30);
+        String paddedData = StatementPrinter.columnSpacePadded(dataToPad, 30);
 
         assertEquals("                          "+dataToPad, paddedData);
     }
@@ -80,20 +91,40 @@ public class StatementPrinterTests {
 
     @Test
     void should_return_well_formatted_table(){
+
+        when(mockedDateService.getDate()).thenReturn(LocalDate.of(2019,9,1));
+
         Vector<Statement> statements = new Vector<>();
-        statements.add(new StatementCredit(StatementType.Deposit, 1000.00, 200.00));
-        statements.add(new StatementDebit(StatementType.Withdrawal, 1200.00, 500.00));
-        statements.add(new StatementDebit(StatementType.TransferDebit, 1700.00, 200.00));
+        statements.add(new StatementCredit(mockedDateService, StatementType.Deposit, 1000.00, 200.00));
+        statements.add(new StatementDebit(mockedDateService, StatementType.Withdrawal, 1200.00, 500.00));
+        statements.add(new StatementDebit(mockedDateService, StatementType.TransferDebit, 1700.00, 200.00));
 
         String formattedTable = StatementPrinter.buildDisplayableTab(statements, "|");
 
         assertEquals(  "+----------------------------------------------+\n" +
                                 "|      date|    operation|credit| debit|balance|\n" +
                                 "+----------------------------------------------+\n" +
-                                "|2019-09-26|      Deposit|200,00|      |1000,00|\n" +
-                                "|2019-09-26|   Withdrawal|      |500,00|1200,00|\n" +
-                                "|2019-09-26|TransferDebit|      |200,00|1700,00|\n" +
+                                "|2019-09-01|      Deposit|200,00|      |1000,00|\n" +
+                                "|2019-09-01|   Withdrawal|      |500,00|1200,00|\n" +
+                                "|2019-09-01|TransferDebit|      |200,00|1700,00|\n" +
                                 "+----------------------------------------------+\n", formattedTable);
+    }
+
+    @Test
+    void should_return_well_formatted_table_with_empty_column(){
+
+        when(mockedDateService.getDate()).thenReturn(LocalDate.of(2019,9,5));
+
+        Vector<Statement> statements = new Vector<>();
+        statements.add(new StatementCredit(mockedDateService, StatementType.Deposit, 1000.00, 200.00));
+
+        String formattedTable = StatementPrinter.buildDisplayableTab(statements, "|");
+
+        assertEquals(  "+-----------------------------------------+\n" +
+                                "|      date|operation|credit|debit|balance|\n" +
+                                "+-----------------------------------------+\n" +
+                                "|2019-09-05|  Deposit|200,00|     |1000,00|\n" +
+                                "+-----------------------------------------+\n", formattedTable);
     }
 
 

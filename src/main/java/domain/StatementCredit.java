@@ -1,12 +1,14 @@
 package domain;
 
+import service.DateNow;
+import service.DateService;
+
 import java.text.DecimalFormat;
-import java.util.Optional;
 
 public class StatementCredit extends Statement {
 
-    public StatementCredit(StatementType type, double balance, double amount) {
-        super(type, balance, amount);
+    public StatementCredit(DateService dateService, StatementType type, double balance, double amount) {
+        super(dateService, type, balance, amount);
     }
 
     @Override

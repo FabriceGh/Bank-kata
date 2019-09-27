@@ -3,15 +3,19 @@ import domain.StatementCredit;
 import domain.StatementDebit;
 import domain.StatementType;
 import org.junit.jupiter.api.Test;
+import service.DateNow;
+import service.DateService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StatementTests {
 
-    private final Statement depositStatement = new StatementCredit(StatementType.Deposit, 1500.00, 100.00);
-    private final Statement withdrawalStatement = new StatementDebit(StatementType.Withdrawal, 2000.00, 200.00);
-    private final Statement transferCreditStatement = new StatementDebit(StatementType.TransferCredit, 2500.00, 300.00);
-    private final Statement transferDebitStatement = new StatementCredit(StatementType.TransferDebit, 1000.00, 400.00);
+    private final DateService dateService = new DateNow();
+    private final Statement depositStatement = new StatementCredit(dateService, StatementType.Deposit, 1500.00, 100.00);
+    private final Statement withdrawalStatement = new StatementDebit(dateService, StatementType.Withdrawal, 2000.00, 200.00);
+    private final Statement transferCreditStatement = new StatementDebit(dateService, StatementType.TransferCredit, 2500.00, 300.00);
+    private final Statement transferDebitStatement = new StatementCredit(dateService, StatementType.TransferDebit, 1000.00, 400.00);
+
 
     @Test
     void should_return_deposit_statement_type () {

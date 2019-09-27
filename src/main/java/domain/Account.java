@@ -1,6 +1,10 @@
 package domain;
 
+import service.DateNow;
+import service.DateService;
+
 import java.util.Vector;
+
 
 public class Account {
 
@@ -16,13 +20,12 @@ public class Account {
         return this.balance;
     }
 
-    public Vector<Statement> getStatements() {
-        return statements;
-    }
+    public Vector<Statement> getStatements() { return statements; }
 
-    public void makeDeposit(double amount) {
+    public void makeDeposit(DateService dateService, double amount) {
 
         this.statements.add(    new StatementCredit(
+                                    dateService,
                                     StatementType.Deposit,
                                     this.balance,
                                     amount)
@@ -30,8 +33,9 @@ public class Account {
         this.balance += amount;
     }
 
-    public void makeWithdraw(double amount) {
+    public void makeWithdraw(DateService dateService, double amount) {
         this.statements.add(    new StatementDebit(
+                                    dateService,
                                     StatementType.Withdrawal,
                                     this.balance,
                                     amount)
@@ -39,13 +43,15 @@ public class Account {
         this.balance -= amount;
     }
 
-    public void makeTransfer(double amount, Account creditedAccount) {
+    public void makeTransfer(DateService dateService, double amount, Account creditedAccount) {
         this.statements.add(    new StatementDebit(
+                                    dateService,
                                     StatementType.TransferDebit,
                                     this.balance,
                                     amount)
         );
         creditedAccount.statements.add(    new StatementCredit(
+                                            dateService,
                                             StatementType.TransferCredit,
                                             creditedAccount.getBalance(),
                                             amount)

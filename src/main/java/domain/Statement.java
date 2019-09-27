@@ -1,7 +1,10 @@
 package domain;
 
+import service.DateNow;
+import service.DateService;
+
 import java.time.LocalDate;
-import java.util.Optional;
+
 
 public abstract class Statement {
 
@@ -10,8 +13,8 @@ public abstract class Statement {
     private final double balance;
     private final double amount;
 
-    public Statement(StatementType type, double balance, double amount){
-        this.date = LocalDate.now();
+    public Statement(DateService dateService, StatementType type, double balance, double amount){
+        this.date = dateService.getDate();
         this.type = type;
         this.balance = balance;
         this.amount = amount;

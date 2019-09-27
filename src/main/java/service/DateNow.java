@@ -2,9 +2,9 @@ package service;
 
 import java.time.LocalDate;
 
-public class DateOperation {
+public class DateNow implements DateService {
 
-    public static LocalDate getDate() {
+    public LocalDate getDate() {
         return LocalDate.now();
     }
 
