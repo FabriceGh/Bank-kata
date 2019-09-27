@@ -2,13 +2,6 @@ import domain.*;
 import org.junit.jupiter.api.Test;
 import service.DateNow;
 import service.DateService;
-
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Vector;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
