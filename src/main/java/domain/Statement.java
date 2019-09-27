@@ -1,10 +1,7 @@
 package domain;
 
-import service.DateNow;
 import service.DateService;
-
 import java.time.LocalDate;
-
 
 public abstract class Statement {
 

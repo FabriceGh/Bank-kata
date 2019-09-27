@@ -7,12 +7,10 @@ import org.mockito.Mock;
 import service.DateNow;
 import service.DateService;
 import service.StatementPrinter;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 

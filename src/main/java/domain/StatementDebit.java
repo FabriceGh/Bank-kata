@@ -1,9 +1,9 @@
 package domain;
 
-import service.DateNow;
 import service.DateService;
-
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class StatementDebit extends Statement{
 
@@ -14,7 +14,8 @@ public class StatementDebit extends Statement{
     @Override
     public String getStringRepresentation(){
 
-        DecimalFormat twoDigitsDecimalFormat = new DecimalFormat("#.00");
+        DecimalFormatSymbols localeFormat = DecimalFormatSymbols.getInstance(Locale.FRANCE);
+        DecimalFormat twoDigitsDecimalFormat = new DecimalFormat("#0.00", localeFormat);
         String separator = "|";
 
         StringBuilder statementStringBuilder = new StringBuilder();
