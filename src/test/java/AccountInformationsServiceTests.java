@@ -1,21 +1,19 @@
 import domain.*;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.configuration.injection.MockInjection;
-import service.AccountInformations;
-import service.DateNow;
+import service.AccountInformationsService;
+import service.DateNowService;
 import service.DateService;
-
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AccountInformationsTests {
+public class AccountInformationsServiceTests {
 
-    private final DateService dateService = new DateNow();
+    private final DateService dateService = new DateNowService();
     private final Account account = new Account();
     private final  Account receiverAccount = new Account();
 
@@ -26,14 +24,14 @@ public class AccountInformationsTests {
         account.makeDeposit(dateService, 10.00);
         account.makeTransfer(dateService, 3000.00, receiverAccount);
 
-        List<StatementType> filterOnDeposit = new Vector<>();
+        List<StatementType> filterOnDeposit = new ArrayList<>();
         filterOnDeposit.add(StatementType.Deposit);
 
-        List<Statement> mockedStatements = new Vector<>();
+        List<Statement> mockedStatements = new ArrayList<>();
         mockedStatements.add(account.getStatements().get(1));
         mockedStatements.add(account.getStatements().get(2));
 
-        List<Statement> onlyDepositStatements = AccountInformations.getStatementsFilteredByType(account, filterOnDeposit);
+        List<Statement> onlyDepositStatements = AccountInformationsService.getStatementsFilteredByType(account, filterOnDeposit);
 
         assertEquals(mockedStatements.get(0), onlyDepositStatements.get(0));
         assertEquals(mockedStatements.get(1), onlyDepositStatements.get(1));
@@ -44,7 +42,7 @@ public class AccountInformationsTests {
     @Test
     void should_return_only_specified_date_statements() {
 
-        DateService mockedDateService = mock(DateNow.class);
+        DateService mockedDateService = mock(DateNowService.class);
         when(mockedDateService.getDate()).thenReturn(LocalDate.of(2019,9,1)
                 , LocalDate.of(2019,9,2)
                 , LocalDate.of(2019,9,2)
@@ -57,7 +55,7 @@ public class AccountInformationsTests {
 
         LocalDate filterDate = LocalDate.of(2019, 9, 2);
 
-        List<Statement> onlySpecifiedDateStatements = AccountInformations.getStatementsFilteredByDate(account, filterDate);
+        List<Statement> onlySpecifiedDateStatements = AccountInformationsService.getStatementsFilteredByDate(account, filterDate);
 
         assertEquals(2, onlySpecifiedDateStatements.size());
         assertEquals(account.getStatements().get(1), onlySpecifiedDateStatements.get(0));

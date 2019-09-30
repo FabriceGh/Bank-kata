@@ -1,8 +1,10 @@
 package service;
 
 import domain.Statement;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
+
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -12,7 +14,7 @@ public abstract class StatementPrinter {
     public static String buildDisplayableTab(List<Statement> inputData, String separator){
 
         StringBuilder displayableTable = new StringBuilder();
-        Vector<String> dataToDisplay = new Vector<>();
+        ArrayList<String> dataToDisplay = new ArrayList<>();
 
         dataToDisplay.add(getHeader());
 
@@ -20,7 +22,7 @@ public abstract class StatementPrinter {
             dataToDisplay.add(currentStatement.getStringRepresentation());
         }
 
-        Vector<Integer> tableColumnLength = maxColumnsLengthInSet(dataToDisplay, separator);
+        ArrayList<Integer> tableColumnLength = maxColumnsLengthInSet(dataToDisplay, separator);
 
         dataToDisplay.remove(0);
 
@@ -44,13 +46,13 @@ public abstract class StatementPrinter {
         return "|date|operation|credit|debit|balance|";
     }
 
-    public static Vector<Integer> columnsLengthInLine(String content, String separator) {
+    public static ArrayList<Integer> columnsLengthInLine(String content, String separator) {
 
         String lineContent = content;
 
         try {
 
-            Vector<Integer> columnsLength = new Vector<>();
+            ArrayList<Integer> columnsLength = new ArrayList<>();
 
             if(!lineContent.contains(separator)) {
                 throw new IllegalArgumentException("Separator not found");
@@ -79,10 +81,10 @@ public abstract class StatementPrinter {
 
     }
 
-    public static Vector<Integer> maxColumnsLengthInSet(Vector<String> orderedDisplayContent, String separator) {
+    public static ArrayList<Integer> maxColumnsLengthInSet(List<String> orderedDisplayContent, String separator) {
 
-        Vector<Vector<Integer>> contentColumnsSize = new Vector<>();
-        Vector<Integer> tableSize;
+        ArrayList<ArrayList<Integer>> contentColumnsSize = new ArrayList<>();
+        ArrayList<Integer> tableSize;
 
         for(String line : orderedDisplayContent) {
             contentColumnsSize.add(columnsLengthInLine(line, separator));
@@ -92,7 +94,7 @@ public abstract class StatementPrinter {
 
         for(int lineTabIndex = 0 ; lineTabIndex < contentColumnsSize.size() ; lineTabIndex++){
             for (int columnIndexInLine = 0 ; columnIndexInLine < contentColumnsSize.get(lineTabIndex).size() ; columnIndexInLine++){
-                Vector<Integer> currentLine = contentColumnsSize.get(lineTabIndex);
+                ArrayList<Integer> currentLine = contentColumnsSize.get(lineTabIndex);
                 if(currentLine.get(columnIndexInLine) > tableSize.get(columnIndexInLine)){
                     tableSize.set(columnIndexInLine, currentLine.get(columnIndexInLine));
                 }

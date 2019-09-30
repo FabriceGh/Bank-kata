@@ -1,6 +1,6 @@
 package domain;
 
-import service.DateNow;
+import service.DateNowService;
 import service.DateService;
 import service.StatementPrinter;
 
@@ -8,7 +8,7 @@ public class Runner {
 
     public static void main(String[] args) {
 
-        DateService dateService = new DateNow();
+        DateService dateService = new DateNowService();
         Account testAccount = new Account();
         Account testAccount2 = new Account();
         testAccount.makeDeposit(dateService, 1000000.00);

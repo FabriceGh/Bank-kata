@@ -4,33 +4,33 @@ import domain.StatementDebit;
 import domain.StatementType;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import service.DateNow;
+import service.DateNowService;
 import service.DateService;
 import service.StatementPrinter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Vector;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class StatementPrinterTests {
 
-    private final DateService dateService = new DateNow();
+    private final DateService dateService = new DateNowService();
 
     @Mock
-    DateService mockedDateService = mock(DateNow.class);
+    DateService mockedDateService = mock(DateNowService.class);
 
 
     @Test
     void should_return_5_columns(){
-        Vector<Integer> columnsInLine = StatementPrinter.columnsLengthInLine("|date|operation|credit|debit|balance|", "|");
+        List<Integer> columnsInLine = StatementPrinter.columnsLengthInLine("|date|operation|credit|debit|balance|", "|");
         assertEquals(5, Objects.requireNonNull(columnsInLine).size());
     }
 
     @Test
     void should_return_correct_columns_lengths(){
-        Vector<Integer> columnsInLine = StatementPrinter.columnsLengthInLine("|date|operation|credit|debit|balance|", "|");
+        List<Integer> columnsInLine = StatementPrinter.columnsLengthInLine("|date|operation|credit|debit|balance|", "|");
 
         assertEquals(4, columnsInLine.get(0));
         assertEquals(9, columnsInLine.get(1));
@@ -41,11 +41,11 @@ public class StatementPrinterTests {
 
     @Test
     void should_return_correct_table_max_columns_lengths(){
-        Vector<String> lines = new Vector<>();
+        List<String> lines = new ArrayList<>();
         lines.add("|date|operation|credit|debit|balance|");
         lines.add("|random|column|content||test|");
 
-        Vector<Integer> maxColumnSizes = StatementPrinter.maxColumnsLengthInSet(lines, "|");
+        ArrayList<Integer> maxColumnSizes = StatementPrinter.maxColumnsLengthInSet(lines, "|");
 
         assertEquals(6, maxColumnSizes.get(0));
         assertEquals(9, maxColumnSizes.get(1));
@@ -64,11 +64,11 @@ public class StatementPrinterTests {
 
     @Test
     void should_return_well_formatted_line(){
-        Vector<String> lines = new Vector<>();
+        List<String> lines = new ArrayList<>();
         lines.add("|date|operation|credit|debit|balance|");
         lines.add("|random|column|content||test|");
 
-        Vector<Integer> maxColumnSizes = StatementPrinter.maxColumnsLengthInSet(lines, "|");
+        List<Integer> maxColumnSizes = StatementPrinter.maxColumnsLengthInSet(lines, "|");
 
         String formattedLine = StatementPrinter.lineFormatter(lines.get(1), "|", maxColumnSizes);
 
@@ -77,7 +77,7 @@ public class StatementPrinterTests {
 
     @Test
     void should_return_well_sized_horizontal_separator(){
-        List<Integer> simulatesListOfColumnWidth = new Vector<Integer>();
+        List<Integer> simulatesListOfColumnWidth = new ArrayList<Integer>();
         simulatesListOfColumnWidth.add(8);
         simulatesListOfColumnWidth.add(5);
         simulatesListOfColumnWidth.add(6);
@@ -92,7 +92,7 @@ public class StatementPrinterTests {
 
         when(mockedDateService.getDate()).thenReturn(LocalDate.of(2019,9,1));
 
-        Vector<Statement> statements = new Vector<>();
+        List<Statement> statements = new ArrayList<>();
         statements.add(new StatementCredit(mockedDateService, StatementType.Deposit, 1000.00, 200.00));
         statements.add(new StatementDebit(mockedDateService, StatementType.Withdrawal, 1200.00, 500.00));
         statements.add(new StatementDebit(mockedDateService, StatementType.TransferDebit, 1700.00, 200.00));
@@ -113,7 +113,7 @@ public class StatementPrinterTests {
 
         when(mockedDateService.getDate()).thenReturn(LocalDate.of(2019,9,5));
 
-        Vector<Statement> statements = new Vector<>();
+        List<Statement> statements = new ArrayList<>();
         statements.add(new StatementCredit(mockedDateService, StatementType.Deposit, 1000.00, 200.00));
 
         String formattedTable = StatementPrinter.buildDisplayableTab(statements, "|");

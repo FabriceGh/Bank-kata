@@ -1,23 +1,26 @@
 package domain;
 
 import service.DateService;
-import java.util.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Account {
 
     private double balance;
-    private Vector<Statement> statements;
+    private List<Statement> statements;
 
     public Account() {
         this.balance = 0.0;
-        this.statements = new Vector<Statement>();
+        this.statements = new ArrayList<Statement>();
     }
 
     public double getBalance() {
         return this.balance;
     }
 
-    public Vector<Statement> getStatements() { return statements; }
+    public List<Statement> getStatements() { return statements; }
 
     public void makeDeposit(DateService dateService, double amount) {
 

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AccountInformations {
+public class AccountInformationsService {
 
     public static List<Statement> getStatementsFilteredByType(Account account, List<StatementType> filterTypes){
 

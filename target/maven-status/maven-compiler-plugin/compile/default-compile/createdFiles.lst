@@ -1,0 +1,10 @@
+domain/Runner.class
+domain/StatementType.class
+service/DateNow.class
+domain/StatementDebit.class
+domain/StatementCredit.class
+service/DateService.class
+service/AccountInformations.class
+service/StatementPrinter.class
+domain/Account.class
+domain/Statement.class
