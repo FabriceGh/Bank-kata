@@ -5,9 +5,8 @@ import java.util.regex.Pattern;
 
 public class StatementPrinterLineService {
 
-    private static String separator = "|";
 
-    public static String[] tokenizeLine(String line) {
+    public static String[] tokenizeLine(String line, String separator) {
 
         if(line.startsWith(separator)){
             line = line.substring(1);
@@ -18,7 +17,7 @@ public class StatementPrinterLineService {
         return lineTokens;
     }
 
-    public static String formatLine(List<Integer> tableColumnsWidth, String[] tokenizedLine){
+    public static String formatLine(List<Integer> tableColumnsWidth, String[] tokenizedLine, String separator){
 
         StringBuilder formattedLine = new StringBuilder();
 
@@ -32,6 +31,7 @@ public class StatementPrinterLineService {
 
         return formattedLine.toString();
     }
+
 
 
 }

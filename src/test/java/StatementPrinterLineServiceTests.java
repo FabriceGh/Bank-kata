@@ -16,7 +16,7 @@ public class StatementPrinterLineServiceTests {
         String lineData = "|column1|column2|column3";
         String[] tokenizedLineData;
 
-        tokenizedLineData = tokenizeLine(lineData);
+        tokenizedLineData = tokenizeLine(lineData, "|");
 
         assertEquals("column1", tokenizedLineData[0]);
         assertEquals("column2", tokenizedLineData[1]);
@@ -37,7 +37,7 @@ public class StatementPrinterLineServiceTests {
         tokenizedLineData[1] = "column2";
         tokenizedLineData[2] = "column3";
 
-        String formattedLine = formatLine(tableColumnWidth, tokenizedLineData);
+        String formattedLine = formatLine(tableColumnWidth, tokenizedLineData, "|");
 
         assertEquals("|  column1|   column2|     column3|\n", formattedLine);
     }

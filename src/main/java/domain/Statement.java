@@ -34,4 +34,9 @@ public abstract class Statement {
     }
 
     public abstract String getStringRepresentation();
+
+    public static String getStringRepresentationHeader() {
+        return"|date|type|credit|debit|balance|";
+    }
+
 }
